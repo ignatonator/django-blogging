@@ -1,0 +1,4 @@
+{
+    "appService.deploySubpath": ".",
+    "appService.defaultWebAppToDeploy": "/subscriptions/a064f65e-56a2-4d1b-8e8c-fd9ee1f3e1d9/resourceGroups/appsvc_linux_centralus/providers/Microsoft.Web/sites/harcblog"
+}

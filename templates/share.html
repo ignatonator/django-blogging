@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load social_share %}
+{% block title %}{% if sent %} Dziękujemy za udostępnienie{% else %} Udostępnij ten post znajomemu{% endif %}{% endblock %}
+{% block content %}
+<div class = "share_content">
+    {% if sent %}
+    <div><h1>Email został wysłany. Dziękujemy za udostępnienie posta!</h1>
+    <p>Wysłanie posta do {{form.cleaned_data.to}} zakończyło się sukcesem.</p>
+<p> Możesz udostępnić post również przez media społecznościowe</p></div>
+    {% else %}
+
+        <form class="news"action="" method="post">
+        {% for field in form %}
+        
+    <div class="fieldWrapper">
+        
+        {{ field }}
+        
+        {% if field.help_text %}
+        <p class="help">{{ field.help_text|safe }}</p>
+        {% endif %}
+    </div>
+    <p>{{ field.errors }}</p>
+{% endfor %}
+        {% csrf_token %}
+        <div class="fieldWrapper">
+        <input class="submit-button" type="submit"value="Wyślij wiadomość email">
+        </div></form><h3>Udostępnij również na:</h3><div class="socials">{% endif %}{% post_to_facebook url  '<i class="icon-facebook"></i>' %}
+        {% post_to_whatsapp url  '<i class="icon-whatsapp"></i>' %}
+        {% post_to_twitter 'Zachęcam do przeczytania tego wpisu:' url  '<i class="icon-twitter"></i>' %}
+        {% post_to_reddit 'Zachęcam do przeczytania tego wpisu:' url  '<i class="icon-reddit-alien"></i>' %}
+        {% post_to_telegram 'Zachęcam do przeczytania tego wpisu:' url  '<i class="icon-telegram"></i>' %}
+        </div>
+</div>
+    
+{% endblock %}

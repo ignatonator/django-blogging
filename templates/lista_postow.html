@@ -1,0 +1,43 @@
+
+{% extends 'base.html' %}
+{% load thumbnail %}
+{% block desc %}Strona poświęcona tematyce harcerskiej. Możesz znaleźć tu wiele przydatnych wskazówek i poradników. Stronę tą tworzą pasjonaci
+	harcerstwa i skautingu{% endblock desc %}
+{% block content %}
+    {%if tag%}
+        <h2>Posty oznaczone tagiem {{tag.name}}</h2>
+        {%endif%}
+    <main class="postlist">
+
+    {% for post in posts %}
+    
+        <div class="singlepost"onclick="location.href='{{post.get_absolute_url}}';">
+            
+            <div class="posttitle">
+                <h1>
+                    <a class="titleh" href="{{ post.get_absolute_url }}">
+                        {{ post.title }}</a></h1>
+            </div>
+
+         
+            
+{% if post.image.url != '' %}
+
+              
+               {% thumbnail post.image "600x450" crop="center" as im %}
+    <img class = "postimg" alt="{{post.title}}" src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
+{% endthumbnail %}
+
+                {% endif %}
+               
+       
+            
+
+        </div>
+   
+    {% endfor %}
+    </main>
+
+    {% include "pagination.html" with page=posts %}
+
+{% endblock content %}

@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block title %}Szukaj{% endblock %}
+{%block content%}
+{% if query %}
+<h1>Posty zawierające "{{query}}"</h1>
+<h3>Znaleziono {{total_results }} wynik {{ total_results|pluralize:"i" }}</h3>
+{%for post  in results%}
+<div class="singlepost"onclick="location.href='{{post.get_absolute_url}}';">
+            
+    <div class="posttitle">
+        <h1>
+            <a class="titleh" href="{{ post.get_absolute_url }}">
+                {{ post.title }}</a></h1>
+    </div>
+
+ 
+    
+{% if post.image.url != '' %}
+
+      
+       {% thumbnail post.image "600x450" crop="center" as im %}
+<img class = "postimg" src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
+{% endthumbnail %}
+
+        {% endif %}
+       
+
+    
+
+</div>
+{%empty%}
+<h2>Brak wyników</h2>
+{%endfor%}
+{%else%}
+<h1>Szukaj postów</h1>
+<form method="get">
+{%for field in form%}
+<div class="fieldWrapper">
+        
+    {{ field }}
+    
+    {% if field.help_text %}
+    <p class="help">{{ field.help_text|safe }}</p>
+    {% endif %}
+</div>
+<p>{{ field.errors }}</p>{%endfor%}
+<div class="fieldWrapper">
+    <input class="submit-button" type="submit"value="Szukaj">
+    </div></form
+{% endif %}
+
+
+
+
+
+{%endblock%}
